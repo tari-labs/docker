@@ -1,9 +1,12 @@
 FROM ubuntu:18.10
 
+ARG version=1.31.0
+ARG channel=stable
+
 ENV RUSTUP_HOME=/usr/local/rustup \
     CARGO_HOME=/usr/local/cargo \
     PATH=/usr/local/cargo/bin:$PATH \
-    RUST_VERSION=1.30.0
+    RUST_VERSION=${version}
 
 RUN set -eux; \
     apt-get update; \
@@ -11,13 +14,10 @@ RUN set -eux; \
         ca-certificates \
         gcc \
         libc6-dev \
-        wget \
-        ; \
-    apt-get purge -y \
-        procps \
-        ; \
-    apt-get upgrade -y; \
-    dpkgArch="$(dpkg --print-architecture)"; \
+        wget
+RUN apt-get purge -y procps && \
+    apt-get upgrade -y
+RUN dpkgArch="$(dpkg --print-architecture)"; \
     case "${dpkgArch##*-}" in \
         amd64) rustArch='x86_64-unknown-linux-gnu'; rustupSha256='0077ff9c19f722e2be202698c037413099e1188c0c233c12a2297bf18e9ff6e7' ;; \
         armhf) rustArch='armv7-unknown-linux-gnueabihf'; rustupSha256='f139e5be4ea2db7ff151c122f5d24af3c587c4fc74a7414e262cb34403278ad3' ;; \
@@ -28,14 +28,12 @@ RUN set -eux; \
     url="https://static.rust-lang.org/rustup/archive/1.14.0/${rustArch}/rustup-init"; \
     wget "$url"; \
     echo "${rustupSha256} *rustup-init" | sha256sum -c -; \
-    chmod +x rustup-init; \
-    ./rustup-init -y --no-modify-path --default-toolchain $RUST_VERSION; \
-    rm rustup-init; \
+    chmod +x rustup-init
+RUN ./rustup-init -y --no-modify-path --default-toolchain $RUST_VERSION && \
+    rm rustup-init && \
     chmod -R a+w $RUSTUP_HOME $CARGO_HOME; \
     rustup --version; \
     cargo --version; \
-    rustc --version; \
-    apt-get remove -y --auto-remove \
-        wget \
-        ; \
+    rustc --version
+RUN apt-get remove -y --auto-remove wget && \
     rm -rf /var/lib/apt/lists/*;
