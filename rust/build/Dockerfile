@@ -1,7 +1,7 @@
 # Build image for the Tari project; includes libZMQ, clippy, rustfmt and other development tools
-FROM rust:1.33
+FROM rust:1.36
 
-ARG NIGHTLY_VERSION=nightly-2019-03-08
+ARG NIGHTLY_VERSION=nightly-2019-07-15
 
 RUN set -eux; \
     apt-get update; \
