@@ -5,7 +5,7 @@ ARG NIGHTLY_VERSION=nightly-2019-07-15
 
 RUN set -eux; \
     apt-get update; \
-    apt-get install -y git build-essential libtool pkg-config autotools-dev autoconf automake cmake uuid-dev libpcre3-dev libsodium-dev valgrind libncurses5-dev libncursesw5-dev libunwind-dev libsystemd-dev liblz4-dev libmicrohttpd-dev; \
+    apt-get install -y git build-essential libtool pkg-config autotools-dev autoconf automake cmake uuid-dev libpcre3-dev libsodium-dev valgrind libncurses5-dev libncursesw5-dev libunwind-dev libsystemd-dev liblz4-dev libmicrohttpd-dev libclang-dev clang; \
     wget https://github.com/zeromq/libzmq/releases/download/v4.3.2/zeromq-4.3.2.tar.gz; \
     tar xvzf zeromq-4.3.2.tar.gz; \
     cd zeromq-4.3.2; \
