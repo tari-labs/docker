@@ -1,7 +1,7 @@
 # Build image for the Tari project; includes libZMQ, clippy, rustfmt and other development tools
-FROM rust:1.36
+FROM rust:1.37
 
-ARG NIGHTLY_VERSION=nightly-2019-08-21
+ARG NIGHTLY_VERSION=nightly-2019-09-13
 
 # libs contains:
 #    https://github.com/zeromq/libzmq/releases/download/v4.3.2/zeromq-4.3.2.tar.gz
