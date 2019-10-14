@@ -1,7 +1,7 @@
 # Build image for the Tari project; includes libZMQ, clippy, rustfmt and other development tools
-FROM rust:1.37
+FROM rust:1.38
 
-ARG NIGHTLY_VERSION=nightly-2019-09-13
+ARG NIGHTLY_VERSION=nightly-2019-10-04
 
 # libs contains:
 #    https://github.com/zeromq/libzmq/releases/download/v4.3.2/zeromq-4.3.2.tar.gz
@@ -10,7 +10,9 @@ ARG NIGHTLY_VERSION=nightly-2019-09-13
 ADD libs libs/
 RUN set -eux; \
     apt-get update; \
-    apt-get install -y git build-essential libtool pkg-config autotools-dev autoconf automake cmake uuid-dev libpcre3-dev libsodium-dev valgrind libncurses5-dev libncursesw5-dev libunwind-dev libsystemd-dev liblz4-dev libmicrohttpd-dev libclang-dev clang; \
+    apt-get install -y git build-essential libtool pkg-config autotools-dev autoconf automake cmake uuid-dev \
+    libpcre3-dev libsodium-dev valgrind libncurses5-dev libncursesw5-dev libunwind-dev libsystemd-dev liblz4-dev \
+    libmicrohttpd-dev libclang-dev clang libssl-dev libc++-dev libc++abi-dev; \
     tar xvzf libs/zeromq-4.3.2.tar.gz; \
     cd zeromq-4.3.2; \
     ./autogen.sh; \
