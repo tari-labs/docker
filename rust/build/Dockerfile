@@ -9,11 +9,17 @@ ARG NIGHTLY_VERSION=nightly-2019-10-04
 #    https://www.sqlite.org/2019/sqlite-autoconf-3290000.tar.gz
 ADD libs libs/
 RUN set -eux; \
+    apt-key add ./libs/llvm-snapshot.gpg.key; \
+    echo "deb http://apt.llvm.org/buster/ llvm-toolchain-buster-9 main" >> /etc/apt/sources.list; \
     apt-get update; \
     apt-get install -y git build-essential libtool pkg-config autotools-dev autoconf automake cmake uuid-dev \
     libpcre3-dev libsodium-dev valgrind libncurses5-dev libncursesw5-dev libunwind-dev libsystemd-dev liblz4-dev \
-    libmicrohttpd-dev libclang-dev clang libssl-dev libc++-dev libc++abi-dev; \
-    tar xvzf libs/zeromq-4.3.2.tar.gz; \
+    libmicrohttpd-dev libssl-dev \
+    libllvm9 llvm-9 llvm-9-dev llvm-9-runtime llvm-9-tools \
+    clang-9 clang-tools-9 libclang-common-9-dev libclang-9-dev libclang1-9 clang-format-9 clangd-9 \
+    libfuzzer-9-dev \
+    libc++-9-dev libc++abi-9-dev
+RUN tar xvzf libs/zeromq-4.3.2.tar.gz; \
     cd zeromq-4.3.2; \
     ./autogen.sh; \
     ./configure --with-libsodium; \
@@ -31,8 +37,8 @@ RUN set -eux; \
     ldconfig; \
     cd ..; \
     rm -rf czmq-4.2.0; \
-    rm -f czmq-4.2.0.tar.gz; \
-    tar xvzf libs/sqlite-autoconf-3290000.tar.gz; \
+    rm -f czmq-4.2.0.tar.gz
+RUN tar xvzf libs/sqlite-autoconf-3290000.tar.gz; \
     cd sqlite-autoconf-3290000; \
     ./configure; \
     make install; \
