@@ -1,5 +1,5 @@
 # Build image for the Tari project; includes libZMQ, clippy, rustfmt and other development tools
-FROM rust:1.40
+FROM rust:1.43
 
 ARG NIGHTLY_VERSION=nightly-2020-01-08
 
@@ -19,25 +19,6 @@ RUN set -eux; \
     clang-9 clang-tools-9 libclang-common-9-dev libclang-9-dev libclang1-9 clang-format-9 clangd-9 \
     libfuzzer-9-dev \
     libc++-9-dev libc++abi-9-dev
-RUN tar xvzf libs/zeromq-4.3.2.tar.gz; \
-    cd zeromq-4.3.2; \
-    ./autogen.sh; \
-    ./configure --with-libsodium; \
-    make check; \
-    make install; \
-    ldconfig; \
-    cd ..; \
-    rm -rf zeromq-4.3.2; \
-    rm -f zeromq-4.3.2.tar.gz; \
-    tar xvzf libs/czmq-4.2.0.tar.gz; \
-    cd czmq-4.2.0; \
-    ./configure; \
-    make check; \
-    make install; \
-    ldconfig; \
-    cd ..; \
-    rm -rf czmq-4.2.0; \
-    rm -f czmq-4.2.0.tar.gz
 RUN tar xvzf libs/sqlite-autoconf-3290000.tar.gz; \
     cd sqlite-autoconf-3290000; \
     ./configure; \
