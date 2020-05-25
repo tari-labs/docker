@@ -1,4 +1,6 @@
-## Rust Android NDK build environment
+# TODO: Update this
+
+# Rust Android NDK build environment
 
 This image contains the Rust compoiler and the Android NDK allowing one to build JNI libraries for Android
 
