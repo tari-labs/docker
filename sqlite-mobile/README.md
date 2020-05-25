@@ -1,6 +1,10 @@
+# TODO: Update this
+
 # sqlite-mobile image
 
-The mobile applications for Tari require a dynamically linked version of SQLite.
+The android mobile application for Tari requires a statically linked versions of SQLite.
+
+These versions as well as the statically linked wallet libraries are compiled into a shared lib via CMake in the Android Studio project.
 
 This image hosts a prebuilt set of binaries for various mobile platforms.
 
