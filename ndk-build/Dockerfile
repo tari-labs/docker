@@ -1,12 +1,7 @@
 FROM quay.io/tarilabs/rust_tari-build-with-deps:nightly-2020-01-08
 
-RUN apt-get update && \
-        apt-get install -yy --no-install-recommends \
-        tree
-
 ARG NDK_VERSION=r21b
 ARG ANDROID_NDK_HOME=/opt/android-ndk
-
 
 # Download and install NDK
 RUN mkdir -p /opt/android-ndk-tmp && \
@@ -23,25 +18,20 @@ ENV NDK_PATH ${ANDROID_NDK_HOME}
 RUN mkdir -p ${NDK_PATH}/sources/cxx-stl/llvm-libc++/include/sys
 RUN cp "${NDK_PATH}/sources/cxx-stl/llvm-libc++/include/limits.h" "${NDK_PATH}/sources/cxx-stl/llvm-libc++/include/sys/syslimits.h"
 
-# Dependency Downloads
-ARG SQLITE_VERSION=sqlite-snapshot-201911192122
-ARG SQLITE_SOURCE=https://www.sqlite.org/snapshot/${SQLITE_VERSION}.tar.gz
-RUN mkdir -p /sqlite
-RUN curl -s ${SQLITE_SOURCE} | tar -xzvf - -C /sqlite --strip-components=1
-
 # Add Android ABIs
 ARG TARGETS="x86_64-linux-android aarch64-linux-android armv7-linux-androideabi i686-linux-android arm-linux-androideabi"
-
+ARG LEVEL=24
 ENV NDK_HOME=${NDK_PATH} NDK_TOOLCHAIN_VERSION=clang
-
 RUN rustup target add ${TARGETS}
 
 # Build Android libs
 ADD scripts /scripts
-# docker hates spaces in arguments
-ENV PLATFORMS  "x86_64-linux-android;aarch64-linux-android;armv7-linux-androideabi"
-ENV LEVEL "24"
+# We'll build a version of the library for every platform given in `PLATFORMS`. Separate multiple platforms by a semicolon
+ENV PLATFORMS  "x86_64-linux-android;aarch64-linux-android;i686-linux-android;armv7-linux-androideabi"
+# Cargo will build the source code found in SRC_DIR
 ENV SRC_DIR "/src"
-
+# You can pass any flags you wish to cargo by overriding the CARGO_FLAGS envar
+ENV CARGO_FLAGS "--lib --release"
+ENV LEVEL=${LEVEL}
 # Code file to execute when the docker container starts up (`entrypoint.sh`)
-ENTRYPOINT "/scripts/entrypoint.sh" ${PLATFORMS} ${LEVEL} ${SRC_DIR}
+ENTRYPOINT "/scripts/entrypoint.sh" "${PLATFORMS}" "${LEVEL}" "${SRC_DIR}"
