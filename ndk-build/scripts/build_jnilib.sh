@@ -116,4 +116,4 @@ cd ${SRCDIR}
 # Build rust build!
 cargo build ${CARGO_FLAGS}
 
-# Compiled library will be in target/platform
+# Compiled library will be in build/{platform}
