@@ -1,5 +1,7 @@
 FROM quay.io/tarilabs/rust_tari-build-with-deps:nightly-2020-01-08
-
+RUN apt-get update
+RUN apt-get -y install libc++abi-dev
+RUN apt-get -y install libc++-dev
 ARG NDK_VERSION=r21b
 ARG ANDROID_NDK_HOME=/opt/android-ndk
 
