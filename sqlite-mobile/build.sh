@@ -91,11 +91,11 @@ do
   cd /sqlite
   # Configure build or show log on error
   echo "Make Config: ${PLATFORMABI}"
-  ./configure --host=${PLATFORMABI} --prefix="/platforms/${PLATFORMABI}" || cat config.log
+  ./configure --host=${PLATFORMABI} --prefix="/platforms/sqlite/${PLATFORMABI}" || cat config.log
   make install
   make clean
   echo "File Format:"
-  objdump -f /platforms/${PLATFORMABI}/lib/libsqlite3.a
+  objdump -f /platforms/sqlite/${PLATFORMABI}/lib/libsqlite3.a
 done
 
 echo "Done"

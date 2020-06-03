@@ -91,21 +91,24 @@ echo "LDFLAGS: ${LDFLAGS}"
 export CPPFLAGS="${CPPFLAGS//PF/$PLATFORMABI}"
 echo "CPPFLAGS: ${CPPFLAGS}"
 
-echo "Sqlite:"
-objdump -f /platforms/platforms/${PLATFORMABI}/lib/libsqlite3.a # Note: Path issue from sqlite_mobile
-
-export RUSTFLAGS="-L/platforms/platforms/${PLATFORMABI}/lib/" # Note: Path issue from sqlite_mobile
+export RUSTFLAGS="${RUSTFLAGS//PF/$PLATFORMABI}"
 echo "RUSTFLAGS: ${RUSTFLAGS}"
 
-export CARGO_BUILD_TARGET="${PLATFORMABI}"
-echo "Cargo target: ${CARGO_BUILD_TARGET}"
+echo " "
+echo "Copying files"
+mkdir -p /srcroot
+cp -rT ${SRCDIR} /srcroot
+echo "Copying done"
+echo " "
 
-echo "Rust config:"
-mkdir -p /build/${PLATFORM_OUTDIR}
+mkdir -p /build/
+argify "build.target.dir"
+export $arg="/build/"
+echo $arg="/build/"
 
-#export CARGO_TARGET_DIR=/build/${PLATFORM_OUTDIR} # Note: diesel_migrations v1.4.0 will not compile with this.
-#echo "Output directory: ${CARGO_TARGET_DIR}"
-
+argify "build.target"
+export $arg="${PLATFORMABI}"
+echo $arg="${PLATFORMABI}"
 argify "target.${PLATFORMABI}.ar"
 export $arg="${AR}"
 echo $arg="${AR}"
@@ -116,13 +119,16 @@ argify "target.${PLATFORMABI}.rustflags"
 export ${arg}="${RUSTFLAGS}"
 echo ${arg}="${RUSTFLAGS}"
 
-cd ${SRCDIR}/base_layer/wallet_ffi # Note: Possibly pass this in as ${project_root}? Without it all crates are
-                                   # downloaded and compiled instead of the compatible subset.
-                                   # Without it croaring breaks in the build (it should be excluded for mobile).
+echo "Cargo Flags: ${CARGO_FLAGS}"
+
+# Fix for "Invalid cross-device link" when changing output directory of build
+# from mounted volume
+cd /srcroot
 
 # Build rust build!
-cargo clean
 cargo build ${CARGO_FLAGS}
-cp ${SRCDIR}/target/${PLATFORMABI}/release/libtari_wallet_ffi.a /build/${PLATFORM_OUTDIR}
-objdump -f /build/${PLATFORM_OUTDIR}/libtari_wallet_ffi.a
-# Compiled library will be in build/{platform}
+
+# Cleanup
+rm -rf /srcroot
+
+#ls /build/${PLATFORMABI}/release

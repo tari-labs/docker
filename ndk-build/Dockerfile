@@ -1,7 +1,4 @@
 FROM quay.io/tarilabs/rust_tari-build-with-deps:nightly-2020-01-08
-RUN apt-get update
-RUN apt-get -y install libc++abi-dev
-RUN apt-get -y install libc++-dev
 ARG NDK_VERSION=r21b
 ARG ANDROID_NDK_HOME=/opt/android-ndk
 
@@ -33,7 +30,7 @@ ENV PLATFORMS  "x86_64-linux-android;aarch64-linux-android;i686-linux-android;ar
 # Cargo will build the source code found in SRC_DIR
 ENV SRC_DIR "/src"
 # You can pass any flags you wish to cargo by overriding the CARGO_FLAGS envar
-ENV CARGO_FLAGS "--lib --release"
+ENV CARGO_FLAGS "--package tari_wallet_ffi --lib --release"
 ENV LEVEL=${LEVEL}
 # Code file to execute when the docker container starts up (`entrypoint.sh`)
 ENTRYPOINT "/scripts/entrypoint.sh" "${PLATFORMS}" "${LEVEL}" "${SRC_DIR}"

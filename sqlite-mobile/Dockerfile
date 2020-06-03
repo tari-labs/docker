@@ -8,6 +8,7 @@ ARG LEVEL=24
 
 ADD ./build.sh /build.sh
 RUN mkdir -p /sqlite
+RUN mkdir -p /platforms/sqlite
 RUN curl -s ${SQLITE_SOURCE} | tar -xzvf - -C /sqlite --strip-components=1
 
 RUN ./build.sh $PLATFORMS $LEVEL /sqlite
