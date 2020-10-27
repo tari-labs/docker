@@ -1,24 +1,23 @@
 # Build image for the Tari project; includes libZMQ, clippy, rustfmt and other development tools
-FROM rust:1.44
+FROM rust:1.46
 
-ARG NIGHTLY_VERSION=nightly-2020-06-10
+ARG NIGHTLY_VERSION=nightly-2020-09-15
 
 # libs contains:
-#    https://github.com/zeromq/libzmq/releases/download/v4.3.2/zeromq-4.3.2.tar.gz
-#    https://github.com/zeromq/czmq/releases/download/v4.2.0/czmq-4.2.0.tar.gz
 #    https://www.sqlite.org/2019/sqlite-autoconf-3290000.tar.gz
 ADD libs libs/
 RUN set -eux; \
     apt-key add ./libs/llvm-snapshot.gpg.key; \
-    echo "deb http://apt.llvm.org/buster/ llvm-toolchain-buster-9 main" >> /etc/apt/sources.list; \
+    echo "deb http://apt.llvm.org/buster/ llvm-toolchain-buster-11 main" >> /etc/apt/sources.list; \
     apt-get update; \
     apt-get install -y git build-essential libtool pkg-config autotools-dev autoconf automake cmake uuid-dev \
     libpcre3-dev libsodium-dev valgrind libncurses5-dev libncursesw5-dev libunwind-dev libsystemd-dev liblz4-dev \
     libmicrohttpd-dev libssl-dev \
-    libllvm9 llvm-9 llvm-9-dev llvm-9-runtime llvm-9-tools \
-    clang-9 clang-tools-9 libclang-common-9-dev libclang-9-dev libclang1-9 clang-format-9 clangd-9 \
-    libfuzzer-9-dev \
-    libc++-9-dev libc++abi-9-dev
+    libllvm11 llvm-11 llvm-11-dev llvm-11-runtime llvm-11-tools \
+    clang-11 clang-tools-11 libclang-common-11-dev libclang-11-dev libclang1-11 clang-format-11 clangd-11 \
+    libfuzzer-11-dev \
+    libc++-11-dev libc++abi-11-dev \
+    libcap2-bin libicu-dev libbsd-dev
 RUN tar xvzf libs/sqlite-autoconf-3290000.tar.gz; \
     cd sqlite-autoconf-3290000; \
     ./configure; \
