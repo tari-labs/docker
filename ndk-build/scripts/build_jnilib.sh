@@ -17,6 +17,8 @@ SRCDIR=$3
 
 set -e
 
+export PKG_CONFIG_ALLOW_CROSS=1
+
 echo "Building ${SRCDIR} for ${PLATFORMABI} on level ${LEVEL}"
 PLATFORM=$(cut -d'-' -f1 <<<"${PLATFORMABI}")
 
