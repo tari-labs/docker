@@ -31,6 +31,6 @@ RUN tar xvzf libs/sqlite-autoconf-3290000.tar.gz; \
 
 RUN rustup update $NIGHTLY_VERSION; \
     rustup default $NIGHTLY_VERSION; \
-    rustup component add rustfmt clippy
+    rustup component add clippy
 
 RUN cargo install mdbook
