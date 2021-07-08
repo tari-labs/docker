@@ -1,4 +1,4 @@
-FROM quay.io/tarilabs/rust-ndk:1.46.0_r21b as base
+FROM quay.io/tarilabs/rust-ndk:1.53.0_r21b as base
 
 # Dependency Downloads
 ARG SQLITE_VERSION=sqlite-snapshot-201911192122
