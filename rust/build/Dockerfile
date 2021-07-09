@@ -1,7 +1,7 @@
 # Build image for the Tari project; includes libZMQ, clippy, rustfmt and other development tools
-FROM rust:1.46
+FROM rust:1.53
 
-ARG NIGHTLY_VERSION=nightly-2020-09-15
+ARG NIGHTLY_VERSION=nightly-2021-05-09
 
 # libs contains:
 #    https://www.sqlite.org/2019/sqlite-autoconf-3290000.tar.gz
@@ -36,9 +36,9 @@ RUN cargo install mdbook
 
 # Node and npm
 ENV NODE_VERSION=14.14.0
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash 
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash
 ENV NVM_DIR=/root/.nvm
-RUN . "$NVM_DIR/nvm.sh" && nvm install ${NODE_VERSION} 
-RUN . "$NVM_DIR/nvm.sh" && nvm use v${NODE_VERSION} 
-RUN . "$NVM_DIR/nvm.sh" && nvm alias default v${NODE_VERSION} 
+RUN . "$NVM_DIR/nvm.sh" && nvm install ${NODE_VERSION}
+RUN . "$NVM_DIR/nvm.sh" && nvm use v${NODE_VERSION}
+RUN . "$NVM_DIR/nvm.sh" && nvm alias default v${NODE_VERSION}
 ENV PATH="/root/.nvm/versions/node/v${NODE_VERSION}/bin/:${PATH}"
