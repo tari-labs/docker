@@ -1,4 +1,4 @@
-# Build image for the Tari project; includes libZMQ, clippy, rustfmt and other development tools
+# Build image for the Tari project; includes SQLite, clippy, rustfmt and other development tools
 FROM rust:1.53
 
 ARG NIGHTLY_VERSION=nightly-2021-05-09
@@ -18,13 +18,13 @@ RUN set -eux; \
     libfuzzer-11-dev \
     libc++-11-dev libc++abi-11-dev \
     libcap2-bin libicu-dev libbsd-dev
-RUN tar xvzf libs/sqlite-autoconf-3290000.tar.gz; \
-    cd sqlite-autoconf-3290000; \
+RUN tar xvzf libs/sqlite-autoconf-3360000.tar.gz; \
+    cd sqlite-autoconf-3360000; \
     ./configure; \
     make install; \
     cd ..; \
-    rm -rf sqlite-autoconf-3290000; \
-    rm -f sqlite-autoconf-3290000.tar.gz; \
+    rm -rf sqlite-autoconf-3360000; \
+    rm -f sqlite-autoconf-3360000.tar.gz; \
     rm -rf /var/lib/apt/lists/*; \
     rm -rf libs
 
