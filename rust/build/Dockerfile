@@ -35,7 +35,7 @@ RUN rustup update $NIGHTLY_VERSION; \
 RUN cargo install mdbook
 
 # Node and npm
-ENV NODE_VERSION=14.14.0
+ENV NODE_VERSION=12.22.6
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash
 ENV NVM_DIR=/root/.nvm
 RUN . "$NVM_DIR/nvm.sh" && nvm install ${NODE_VERSION}
