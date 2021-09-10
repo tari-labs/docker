@@ -32,7 +32,7 @@ RUN rustup update $NIGHTLY_VERSION; \
     rustup default $NIGHTLY_VERSION; \
     rustup component add rustfmt clippy
 
-RUN cargo install mdbook
+# RUN cargo install mdbook
 
 # Node and npm
 ENV NODE_VERSION=12.22.6
