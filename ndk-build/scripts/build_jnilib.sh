@@ -127,6 +127,9 @@ echo "Cargo Flags: ${CARGO_FLAGS}"
 # from mounted volume
 cd /srcroot
 
+# Ensure target is installed in the event rust updated and invalidated it
+rustup target add x86_64-linux-android aarch64-linux-android armv7-linux-androideabi
+
 # Build rust build!
 cargo build ${CARGO_FLAGS}
 
