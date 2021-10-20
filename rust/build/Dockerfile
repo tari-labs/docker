@@ -1,7 +1,7 @@
 # Build image for the Tari project; includes SQLite, clippy, rustfmt and other development tools
 FROM rust:1.53
 
-ARG NIGHTLY_VERSION=nightly-2021-05-09
+ARG NIGHTLY_VERSION=nightly-2021-08-18
 
 # libs contains:
 #    https://www.sqlite.org/2019/sqlite-autoconf-3290000.tar.gz
