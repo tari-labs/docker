@@ -1,23 +1,20 @@
 # Build image for the Tari project; includes SQLite, clippy, rustfmt and other development tools
-FROM rust:1.53
+FROM rust:1.56
 
-ARG NIGHTLY_VERSION=nightly-2021-08-18
+ARG NIGHTLY_VERSION=nightly-2021-09-18
 
 # libs contains:
 #    https://www.sqlite.org/2019/sqlite-autoconf-3290000.tar.gz
 ADD libs libs/
 RUN set -eux; \
     apt-key add ./libs/llvm-snapshot.gpg.key; \
-    echo "deb http://apt.llvm.org/buster/ llvm-toolchain-buster-11 main" >> /etc/apt/sources.list; \
+    echo "deb http://apt.llvm.org/bullseye/ llvm-toolchain-bullseye main" >> /etc/apt/sources.list; \
     apt-get update; \
-    apt-get install -y git build-essential libtool pkg-config autotools-dev autoconf automake cmake uuid-dev \
-    libpcre3-dev libsodium-dev valgrind libncurses5-dev libncursesw5-dev libunwind-dev libsystemd-dev liblz4-dev \
-    libmicrohttpd-dev libssl-dev \
-    libllvm11 llvm-11 llvm-11-dev llvm-11-runtime llvm-11-tools \
-    clang-11 clang-tools-11 libclang-common-11-dev libclang-11-dev libclang1-11 clang-format-11 clangd-11 \
-    libfuzzer-11-dev \
-    libc++-11-dev libc++abi-11-dev \
-    libcap2-bin libicu-dev libbsd-dev
+    apt-get install -y build-essential cmake \
+    libsodium-dev libunwind-dev libsystemd-dev liblz4-dev \
+    libmicrohttpd-dev \
+    clang-format clang-tools clang clangd libc++-dev libc++1 libc++abi-dev libc++abi1 libclang-dev libclang1 liblldb-dev libomp-dev libomp5 lld llvm-dev llvm-runtime llvm \
+    valgrind
 RUN tar xvzf libs/sqlite-autoconf-3360000.tar.gz; \
     cd sqlite-autoconf-3360000; \
     ./configure; \
