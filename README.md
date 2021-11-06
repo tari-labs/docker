@@ -14,7 +14,7 @@ Containers for building rust applications
 ```
 cd rust
 cd build
-sudo docker build -t quay.io/tarilabs/rust_tari-build-with-deps:nightly-2021-08-18 .
+sudo docker build -t quay.io/tarilabs/rust_tari-build-with-deps:nightly-2021-09-18 .
 cd ../..
 cd ndk-build/
 sudo docker build -t quay.io/tarilabs/rust-ndk:1.53.0_r21b .
