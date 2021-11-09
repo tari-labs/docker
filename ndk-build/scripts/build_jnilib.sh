@@ -122,6 +122,7 @@ export ${arg}="${RUSTFLAGS}"
 echo ${arg}="${RUSTFLAGS}"
 
 echo "Cargo Flags: ${CARGO_FLAGS}"
+echo "Cargo HTTP multiplexing: ${CARGO_HTTP_MULTIPLEXING}"
 
 # Fix for "Invalid cross-device link" when changing output directory of build
 # from mounted volume

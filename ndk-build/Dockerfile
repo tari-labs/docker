@@ -1,4 +1,4 @@
-FROM quay.io/tarilabs/rust_tari-build-with-deps:nightly-2021-08-18
+FROM quay.io/tarilabs/rust_tari-build-with-deps:nightly-2021-09-18
 ARG NDK_VERSION=r21b
 ARG ANDROID_NDK_HOME=/opt/android-ndk
 
@@ -26,11 +26,12 @@ RUN rustup target add ${TARGETS}
 # Build Android libs
 ADD scripts /scripts
 # We'll build a version of the library for every platform given in `PLATFORMS`. Separate multiple platforms by a semicolon
-ENV PLATFORMS  "x86_64-linux-android;aarch64-linux-android;i686-linux-android;armv7-linux-androideabi"
+ENV PLATFORMS "x86_64-linux-android;aarch64-linux-android;i686-linux-android;armv7-linux-androideabi"
 # Cargo will build the source code found in SRC_DIR
 ENV SRC_DIR "/src"
 # You can pass any flags you wish to cargo by overriding the CARGO_FLAGS envar
 ENV CARGO_FLAGS "--package tari_wallet_ffi --lib --release"
 ENV LEVEL=${LEVEL}
+ENV CARGO_HTTP_MULTIPLEXING="false"
 # Code file to execute when the docker container starts up (`entrypoint.sh`)
 ENTRYPOINT "/scripts/entrypoint.sh" "${PLATFORMS}" "${LEVEL}" "${SRC_DIR}"
