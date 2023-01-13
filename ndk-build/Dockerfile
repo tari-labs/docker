@@ -1,4 +1,4 @@
-FROM quay.io/tarilabs/rust_tari-build-with-deps:nightly-2021-11-20
+FROM quay.io/tarilabs/rust_tari-build-with-deps:nightly-2022-11-03
 ARG NDK_VERSION=r21b
 ARG ANDROID_NDK_HOME=/opt/android-ndk
 

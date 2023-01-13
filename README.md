@@ -16,10 +16,10 @@ Containers for building rust applications
 
 ```bash
 # in rust/build/
-docker build -t quay.io/tarilabs/rust_tari-build-with-deps:nightly-2021-11-20 .
+docker build -t quay.io/tarilabs/rust_tari-build-with-deps:nightly-2022-11-03 .
 
 # in ndk-build/
-docker build -t quay.io/tarilabs/rust-ndk:1.58.0_r21b .
+docker build -t quay.io/tarilabs/rust-ndk:1.67.0_r21b .
 
 # in sqlite-mobile/
 docker build -t quay.io/tarilabs/sqlite-mobile:202201112328 .

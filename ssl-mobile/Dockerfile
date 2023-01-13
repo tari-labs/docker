@@ -1,4 +1,4 @@
-FROM quay.io/tarilabs/rust-ndk:1.53.0_r21b as base
+FROM quay.io/tarilabs/rust-ndk:1.67.0_r21b as base
 
 # Dependency Downloads
 ARG OPENSSL_VERSION=1.1.1h

@@ -1,4 +1,4 @@
-FROM quay.io/tarilabs/rust-ndk:1.58.0_r21b as base
+FROM quay.io/tarilabs/rust-ndk:1.67.0_r21b as base
 
 RUN apt-get update && apt-get install libdigest-sha3-perl
 
